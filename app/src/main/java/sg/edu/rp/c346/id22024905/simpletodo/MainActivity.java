@@ -3,6 +3,7 @@ package sg.edu.rp.c346.id22024905.simpletodo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -76,14 +77,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(alMovies.isEmpty()) {
                     Toast.makeText(MainActivity.this,"You don't have any task to remove", Toast.LENGTH_SHORT).show();
-                } else {
+                }  else {
                     String sIndex = etMovie.getText().toString();
-                    int index = Integer.parseInt(sIndex);
-                    if(index >=0 && index<alMovies.size()) {
-                        alMovies.remove(index);
-                        aaMovie.notifyDataSetChanged();
+
+                    String checkValid = "\\d+";
+
+                    if(sIndex.matches(checkValid)) {
+                        int index = Integer.parseInt(sIndex);
+
+                        if (index >= 0 && index < alMovies.size()) {
+                            alMovies.remove(index);
+                            aaMovie.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT).show();
+                        }
                     } else{
-                        Toast.makeText(MainActivity.this,"Wrong index number" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "This is not an index number", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
